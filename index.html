@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Jiya ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+
+body{
+min-height:100vh;
+background: linear-gradient(135deg,#ff758c,#ff7eb3,#ffd3a5);
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+overflow-x:hidden;
+color:white;
+}
+
+/* floating hearts */
+.heart{
+position:fixed;
+top:0;
+color:#fff;
+font-size:20px;
+animation:float 8s linear infinite;
+opacity:.7;
+z-index:0;
+}
+@keyframes float{
+0%{transform:translateY(100vh) scale(0);}
+100%{transform:translateY(-10vh) scale(1.5);}
+}
+
+/* card */
+.card{
+position:relative;
+z-index:1;
+backdrop-filter: blur(15px);
+background: rgba(255,255,255,0.15);
+border-radius:25px;
+padding:35px 22px;
+text-align:center;
+width:100%;
+max-width:420px;
+box-shadow:0 10px 40px rgba(0,0,0,0.25);
+animation:fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+.title{
+font-family:"Dancing Script",cursive;
+font-size:2.5em;
+margin-bottom:10px;
+}
+
+.subtitle{
+font-size:1.05em;
+opacity:.9;
+margin-bottom:20px;
+}
+
+#typing{
+font-size:1.05em;
+margin-bottom:25px;
+line-height:1.7em;
+}
+
+button{
+padding:13px 28px;
+border:none;
+border-radius:50px;
+font-size:1em;
+cursor:pointer;
+background:linear-gradient(45deg,#fff,#ffe0ec);
+color:#ff4d88;
+font-weight:bold;
+transition:.3s;
+box-shadow:0 0 15px rgba(255,255,255,0.6);
+}
+
+button:hover{
+transform:scale(1.08);
+box-shadow:0 0 25px rgba(255,255,255,0.9);
+}
+
+.hidden{
+display:none;
+margin-top:20px;
+font-size:1.2em;
+animation:fadeIn 1.5s ease;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+/* mobile fixes */
+@media(max-width:500px){
+.title{font-size:2em;}
+.subtitle{font-size:.95em;}
+#typing{font-size:.95em;}
+}
+</style></head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="card">
+<div class="title">Happy Birthday Jiya 🎂</div>
+<div class="subtitle">To the girl who makes my world beautiful ✨</div>
+
+<div id="typing"></div>
+
+<button onclick="surprise()">Tap Here Madam Ji 💖</button>
+
+<div id="finalMsg" class="hidden">
+I know I have write this much but I love you more than words can ever express ❤️
+
+Forever yours 💞 mwahhhhhh 😽 //
+</div>
+</div>
+
+<script>
+const text=`Happy Birthday, my beautiful Jiya. 🎉 From the moment you came into my life, everything started feeling brighter and happier. You’re not just someone I love talking to — you’re the reason I smile randomly, the reason my days feel special, and the reason my heart feels so full. I honestly don’t know what I did to deserve someone as sweet, caring, and amazing as you, but I thank life every day for you. On your special day, I just want you to know that you mean more to me than words can ever explain. I hope your birthday is as lovely, magical, and unforgettable as you are. ❤️`;
+
+let i=0;
+function typing(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,35);
+}
+}
+typing();
+
+/* hearts */
+function createHeart(){
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),9000);
+}
+setInterval(createHeart,400);
+
+/* confetti */
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+let pieces=[];
+
+function startConfetti(){
+for(let i=0;i<180;i++){
+pieces.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height-canvas.height,
+r:Math.random()*6+4,
+d:Math.random()*50,
+color:`hsl(${Math.random()*360},100%,70%)`
+});
+}
+animate();
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+pieces.forEach(p=>{
+ctx.fillStyle=p.color;
+ctx.fillRect(p.x,p.y,p.r,p.r);
+});
+update();
+requestAnimationFrame(animate);
+}
+
+function update(){
+pieces.forEach(p=>{
+p.y+=Math.cos(p.d)+3;
+p.x+=Math.sin(p.d);
+if(p.y>canvas.height){
+p.y=-10;
+p.x=Math.random()*canvas.width;
+}
+});
+}
+
+function surprise(){
+document.getElementById("finalMsg").classList.remove("hidden");
+startConfetti();
+}
+</script>
+
+</body>
+</html>
